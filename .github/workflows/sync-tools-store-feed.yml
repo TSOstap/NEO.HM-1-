@@ -1,0 +1,41 @@
+name: Sync Tools Store feed
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "*/10 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch feed
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tools-store-feed
+          curl -L --fail --silent --show-error --retry 5 --retry-delay 3 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTL7Pyh2MT3MzZ3XROED7f1UqiW9VTsazXtvNISgKpj63gyRU468WU-eTwRFJBA-AgZ7iUMQGO1-ule/pub?gid=364265679&single=true&output=csv" -o tools-store-feed/horoshop.csv.tmp
+          test -s tools-store-feed/horoshop.csv.tmp
+          head -c 500 tools-store-feed/horoshop.csv.tmp | grep -q "Артикул"
+          mv tools-store-feed/horoshop.csv.tmp tools-store-feed/horoshop.csv
+
+      - name: Commit feed changes
+        shell: bash
+        run: |
+          if git diff --quiet -- tools-store-feed/horoshop.csv; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "tools-store-feed-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add tools-store-feed/horoshop.csv
+          git commit -m "Sync Horoshop feed"
+          git push
