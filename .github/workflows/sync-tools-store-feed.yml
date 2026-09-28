@@ -6,7 +6,7 @@ on:
       - main
   workflow_dispatch:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: write
@@ -17,12 +17,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch feed
+      - name: Fetch live CSV from Google Sheets
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p tools-store-feed
-          curl -L --fail --silent --show-error --retry 5 --retry-delay 3 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTL7Pyh2MT3MzZ3XROED7f1UqiW9VTsazXtvNISgKpj63gyRU468WU-eTwRFJBA-AgZ7iUMQGO1-ule/pub?gid=364265679&single=true&output=csv" -o tools-store-feed/horoshop.csv.tmp
+          curl -L --fail --silent --show-error --retry 5 --retry-delay 3 \
+            "https://docs.google.com/spreadsheets/d/1i1SdBqzchSxqp0Msa4TXsVzX81mfsulz_wn8PcM_50w/gviz/tq?tqx=out:csv&gid=364265679" \
+            -o tools-store-feed/horoshop.csv.tmp
           test -s tools-store-feed/horoshop.csv.tmp
           head -c 500 tools-store-feed/horoshop.csv.tmp | grep -q "Артикул"
           mv tools-store-feed/horoshop.csv.tmp tools-store-feed/horoshop.csv
@@ -30,6 +32,7 @@ jobs:
       - name: Commit feed changes
         shell: bash
         run: |
+          set -euo pipefail
           if git diff --quiet -- tools-store-feed/horoshop.csv; then
             echo "No changes."
             exit 0
