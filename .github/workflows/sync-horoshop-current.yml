@@ -82,7 +82,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- tools-store-feed/horoshop-current.csv; then
+          if [ -z "$(git status --porcelain -- tools-store-feed/horoshop-current.csv)" ]; then
             echo "No availability changes."
             exit 0
           fi
