@@ -1,0 +1,93 @@
+name: Sync Horoshop current availability
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/sync-horoshop-current.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 5-21 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Horoshop XML
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tools-store-feed
+          curl -L --fail --silent --show-error \
+            --retry 4 --retry-delay 5 --retry-all-errors \
+            "https://tools-store.com.ua/content/export/23537d44bee70bc30b50e6bc763e3a60.xml" \
+            -o tools-store-feed/horoshop-current.xml
+          test -s tools-store-feed/horoshop-current.xml
+
+      - name: Build compact current-availability CSV
+        shell: python
+        run: |
+          import csv
+          import os
+          import xml.etree.ElementTree as ET
+
+          src = "tools-store-feed/horoshop-current.xml"
+          dst = "tools-store-feed/horoshop-current.csv.tmp"
+
+          rows = 0
+          with open(dst, "w", encoding="utf-8-sig", newline="") as f:
+              w = csv.writer(f)
+              w.writerow([
+                  "Артикул Хорошоп (внутрішній)",
+                  "Наявність Хорошоп",
+                  "Назва товару"
+              ])
+
+              for event, elem in ET.iterparse(src, events=("end",)):
+                  if elem.tag != "offer":
+                      continue
+
+                  vendor = elem.findtext("vendorCode")
+                  name = elem.findtext("name") or ""
+                  available_raw = str(elem.attrib.get("available", "")).strip().lower()
+
+                  if vendor:
+                      status = (
+                          "В наявності"
+                          if available_raw in {"true", "1", "yes"}
+                          else "Немає в наявності"
+                      )
+                      w.writerow([vendor.strip(), status, name.strip()])
+                      rows += 1
+
+                  elem.clear()
+
+          if rows < 3000:
+              raise SystemExit(f"Safety stop: only {rows} offers parsed")
+
+          os.replace(dst, "tools-store-feed/horoshop-current.csv")
+          print(f"Parsed {rows} Horoshop offers")
+
+      - name: Remove large temporary XML
+        shell: bash
+        run: rm -f tools-store-feed/horoshop-current.xml
+
+      - name: Commit when current availability changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- tools-store-feed/horoshop-current.csv; then
+            echo "No availability changes."
+            exit 0
+          fi
+          git config user.name "tools-store-feed-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add tools-store-feed/horoshop-current.csv
+          git commit -m "Sync current Horoshop availability"
+          git push
