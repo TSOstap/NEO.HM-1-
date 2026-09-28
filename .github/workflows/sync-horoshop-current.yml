@@ -35,10 +35,16 @@ jobs:
         run: |
           import csv
           import os
+          import re
           import xml.etree.ElementTree as ET
 
           src = "tools-store-feed/horoshop-current.xml"
           dst = "tools-store-feed/horoshop-current.csv.tmp"
+
+          with open(src, "rb") as fh:
+              head = fh.read(2048).decode("utf-8", errors="ignore")
+          match = re.search(r'<yml_catalog\s+date="([^"]+)"', head)
+          xml_date = match.group(1) if match else ""
 
           rows = 0
           with open(dst, "w", encoding="utf-8-sig", newline="") as f:
@@ -46,7 +52,8 @@ jobs:
               w.writerow([
                   "Артикул Хорошоп (внутрішній)",
                   "Наявність Хорошоп",
-                  "Назва товару"
+                  "Назва товару",
+                  "Оновлено Хорошоп"
               ])
 
               for event, elem in ET.iterparse(src, events=("end",)):
@@ -63,7 +70,7 @@ jobs:
                           if available_raw in {"true", "1", "yes"}
                           else "Немає в наявності"
                       )
-                      w.writerow([vendor.strip(), status, name.strip()])
+                      w.writerow([vendor.strip(), status, name.strip(), xml_date])
                       rows += 1
 
                   elem.clear()
