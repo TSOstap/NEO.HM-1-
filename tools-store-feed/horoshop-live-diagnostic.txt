@@ -1,0 +1,49 @@
+HTTP: 200
+Bytes: 40051833
+Root: yml_catalog
+Candidates: 5106
+Rows written: 2251
+Missing article: 0
+Missing status: 2855
+Top tags:
+picture: 32125
+offer: 5106
+url: 5106
+price: 5106
+currencyId: 5106
+categoryId: 5106
+vendorCode: 5106
+vendor: 5106
+name: 5106
+description: 5106
+oldprice: 4707
+param: 3255
+category: 380
+yml_catalog: 1
+shop: 1
+currencies: 1
+currency: 1
+categories: 1
+offers: 1
+
+First candidate preview:
+<offer id="512" group_id="30792" available="true">
+    <url>https://tools-store.com.ua/einhell-tc-sm-2131-1-dual/</url>
+    <oldprice>10950</oldprice>
+    <price>8760</price>
+    <currencyId>UAH</currencyId>
+    <categoryId>1494</categoryId>
+    <picture>https://tools-store.com.ua/content/images/13/34705319293712_+9699129331.jpeg</picture>
+    <picture>https://tools-store.com.ua/content/images/13/61646116886804_+8b6672bcc3.jpeg</picture>
+    <picture>https://tools-store.com.ua/content/images/13/84395855867310_+dfc4070802.jpeg</picture>
+    <picture>https://tools-store.com.ua/content/images/13/15782353204539_+8409198da4.jpeg</picture>
+    <picture>https://tools-store.com.ua/content/images/13/33985571559218_+476e212607.jpeg</picture>
+    <picture>https://tools-store.com.ua/content/images/13/84226366013496_+7fe0259d18.jpeg</picture>
+    <picture>https://tools-store.com.ua/content/images/13/20899660277728_+46897d5392.jpeg</picture>
+    <vendorCode>4300390</vendorCode>
+    <vendor>Einhell</vendor>
+    <name>Торцювальна пила Einhell TC-SM 2131/2 Dual (4300390)</name>
+    <description>&lt;p&gt;Торцювальна пилка Einhell TC-SM 2131/2 Dual дозволяє виконувати швидке, точне та чисте розторцювання дерев&amp;#39;яних виробів. Поворотно-похила голова пили може нахилятися праворуч/ліворуч від 0&amp;deg; до +45&amp;deg; і дозволяє виконувати звичайні та подвійні похилі пропили. Пила гарантує чистий та гладкий зріз завдяки 48 зубцям пильного диску 210 мм та глибину пропилу при 90&amp;deg; до 62 мм. Einhell TC-SM 2131/2 Dual має поворотний стіл з точним регулюванням кута. Пила торцювальна Einhell TC-SM 2131/2 Dual оснащена механізмом протяжки, який дозволяє збільшити ширину оброблюваної заготовки при 90&amp;deg; до 310 мм. Для підвищення точності пила Einhell TC-SM 2131/2 Dual оснащена лазерним модулем, промінь лазера проектується на оброблювану заготовку в площині різання.&lt;/p&gt; &lt;p&gt;Придбати торцювальну пилку Einhell TC-SM 2131/2 Dual Ви можете у нашому інтернет магазині за чудовою ціною.&lt;/p&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Особливості торцювальної пилки Einhell TC-SM 2131/2 Dual:&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;- безступінчастий нахил голови двигуна праворуч/ліворуч від 0&amp;deg; до +45&amp;deg;&lt;/p&gt; &lt;p&gt;- Пильний диск з твердосплавними карбідними напайками (HW)&lt;/p&gt; &lt;p&gt;- захисний кожух пильного диска, що відкидається.&lt;/p&gt; &lt;p&gt;- Плавний хід по 2-м штангам механізму протяжки&lt;/p&gt; &lt;p&gt;- Блокування шпинделя для легкої та швидкої заміни пильного диска&lt;/p&gt; &lt;p&gt;- Пильна вирва за пильним полотном для кращого поглинання пилу&lt;/p&gt; &lt;p&gt;- Стружкозбірний мішок&lt;/p&gt; &lt;p&gt;- Двосторонні упори підтримки заготівлі&lt;/p&gt; &lt;p&gt;- Лазерний модуль, що вказує лінію різу&lt;/p&gt; &lt;p&gt;- Вбудована шкала лінійки&lt;/p&gt; &lt;p&gt;- Поворотний стіл з точним регулюванням кута від -47&amp;deg; до +47&amp;deg;&lt;/p&gt; &lt;p&gt;- Струбцина для фіксації заготівлі&lt;/p&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;h4&gt;Характеристики&lt;/h4&gt; &lt;table&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Бренд&lt;/p&gt; &lt;/td&gt; &lt;td&gt;Einhell&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Код виробника&lt;/p&gt; &lt;/td&gt; &lt;td&gt;TC-SM 2131/2 Dual&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Артикул&lt;/p&gt; &lt;/td&gt; &lt;td&gt;4300390&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Потужність&lt;/p&gt; &lt;/td&gt; &lt;td&gt;1500 Вт&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Макс. потужність (S2 / S2time)&lt;/p&gt; &lt;/td&gt; &lt;td&gt;1800 Вт / 5 хв.&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Оберти х. х.&lt;/p&gt; &lt;/td&gt; &lt;td&gt;4900 об/хв&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Ширина різу 90&amp;deg;х90&amp;deg; / 90&amp;deg;х45&amp;deg;:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;310х62 / 210х62 мм&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Ширина різу 45&amp;deg;х90&amp;deg; / 45&amp;deg;x45&amp;deg;:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;310х36 / 210х36 (праворуч 25) мм&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Максимальна ширина різу:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;310 мм&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Розмір TCT диска / кільк. зубів:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;210 x 30 x 2,8 мм / 48 Z&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Вага нетто:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;11 кг&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Вага брутто:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;14.2 кг&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Розміри в упаковці:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;71.7 &amp;times; 45.5 &amp;times; 39.3 см&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt; &lt;p&gt;Гарантія:&lt;/p&gt; &lt;/td&gt; &lt;td&gt;36 місяців&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;p&gt;&lt;strong&gt;Tools Store - це великий вибір інструментів для дому, будівництва та майстерні. Електроінструменти, ручний інструмент, витратні матеріали та аксесуари у нас в достатній наявності для завзятих майстрів. Якість кожного товару перевіряється нашими робітниками, щоб ви отримали у своїй посилці те, на що розраховуєте! Оформлення замовлення зручне, доставка здійснюється по всій Україні, асортимент постійно оновлюється, тому легко знайдете саме те, що потрібно. Tools Store &amp;mdash; сила в кожному інструменті.&lt;/strong&gt;&lt;/p&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;p&gt;&amp;nbsp;&lt;/p&gt; &lt;p style="text-align:center"&gt;&lt;strong&gt;&lt;strong&gt;&amp;nbsp;&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;</description>
+    <param name="Гарантия">36 мес.</param>
+   </offer>
+   
