@@ -80,7 +80,10 @@ def find_status(elem):
         s=status_from_value(v)
         if s:
             return s
-    # if export contains offer and no explicit stock marker, don't guess available
+    # Horoshop YML: unavailable offers may omit the available attribute entirely.
+    # For a repeating <offer>, absence of an availability marker therefore means unavailable.
+    if local(elem.tag).lower() == "offer":
+        return "Немає в наявності"
     return ""
 
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
