@@ -1,6 +1,12 @@
 name: Sync live Horoshop XML
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/sync-horoshop-live-xml.yml"
+      - "tools-store-feed/parse_horoshop_live.py"
   workflow_dispatch:
   schedule:
     - cron: "*/5 * * * *"
