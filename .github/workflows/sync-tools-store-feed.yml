@@ -8,10 +8,14 @@ on:
       - ".github/workflows/sync-tools-store-feed.yml"
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "2-59/5 * * * *"
 
 permissions:
   contents: write
+
+concurrency:
+  group: sync-tools-store-feed
+  cancel-in-progress: true
 
 jobs:
   sync:
