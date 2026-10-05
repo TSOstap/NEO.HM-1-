@@ -8,7 +8,7 @@ on:
       - ".github/workflows/sync-tools-store-feed.yml"
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "23 */4 * * *"
 
 permissions:
   contents: write
@@ -18,38 +18,70 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  sync:
+  sync-loop:
     runs-on: ubuntu-latest
+    timeout-minutes: 355
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Fetch live CSV from Google Sheets
+      - name: Keep Horoshop CSV fresh every 5 minutes
         shell: bash
         run: |
-          set -euo pipefail
-          mkdir -p tools-store-feed
-          curl -L --fail --silent --show-error --retry 5 --retry-delay 3 \
-            "https://docs.google.com/spreadsheets/d/1i1SdBqzchSxqp0Msa4TXsVzX81mfsulz_wn8PcM_50w/gviz/tq?tqx=out:csv&gid=364265679" \
-            -o tools-store-feed/horoshop.csv.tmp
-          test -s tools-store-feed/horoshop.csv.tmp
-          head -c 500 tools-store-feed/horoshop.csv.tmp | grep -q "Артикул"
-          mv tools-store-feed/horoshop.csv.tmp tools-store-feed/horoshop.csv
+          set -u
 
-      - name: Record successful sync time
-        shell: bash
-        run: |
-          TZ=Europe/Kyiv date "+%d.%m.%Y %H:%M:%S" > tools-store-feed/last-sync.txt
+          FEED_URL="https://docs.google.com/spreadsheets/d/1i1SdBqzchSxqp0Msa4TXsVzX81mfsulz_wn8PcM_50w/gviz/tq?tqx=out:csv&gid=364265679"
 
-      - name: Commit feed and sync timestamp
-        shell: bash
-        run: |
-          set -euo pipefail
           git config user.name "tools-store-feed-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add tools-store-feed/horoshop.csv tools-store-feed/last-sync.txt
-          if git diff --cached --quiet; then
-            echo "No changes."
-            exit 0
-          fi
-          git commit -m "Sync Horoshop feed"
-          git push
+          mkdir -p tools-store-feed
+
+          for i in $(seq 1 68); do
+            echo "=== Sync iteration $i / 68 ==="
+
+            git fetch origin main
+            git reset --hard origin/main
+
+            TS=$(date +%s)
+
+            if curl -L --fail --silent --show-error \
+              --retry 5 --retry-delay 3 \
+              -H "Cache-Control: no-cache" \
+              "${FEED_URL}&_=${TS}" \
+              -o tools-store-feed/horoshop.csv.tmp; then
+
+              if test -s tools-store-feed/horoshop.csv.tmp && \
+                 head -c 500 tools-store-feed/horoshop.csv.tmp | grep -q "Артикул"; then
+
+                mv tools-store-feed/horoshop.csv.tmp tools-store-feed/horoshop.csv
+                TZ=Europe/Kyiv date "+%d.%m.%Y %H:%M:%S" > tools-store-feed/last-sync.txt
+
+                git add tools-store-feed/horoshop.csv tools-store-feed/last-sync.txt
+
+                if ! git diff --cached --quiet; then
+                  git commit -m "Sync Horoshop feed"
+
+                  if ! git push origin HEAD:main; then
+                    echo "Push conflicted; retrying on latest main..."
+                    git fetch origin main
+                    git rebase origin/main
+                    git push origin HEAD:main
+                  fi
+                else
+                  echo "No file changes to commit."
+                fi
+              else
+                echo "Downloaded CSV failed validation; keeping previous feed."
+                rm -f tools-store-feed/horoshop.csv.tmp
+              fi
+            else
+              echo "Google Sheets download failed; keeping previous feed."
+              rm -f tools-store-feed/horoshop.csv.tmp
+            fi
+
+            if [ "$i" -lt 68 ]; then
+              sleep 300
+            fi
+          done
