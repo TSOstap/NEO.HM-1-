@@ -9,16 +9,24 @@ on:
       - "tools-store-feed/parse_horoshop_live.py"
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "0 */3 * * *"
 
 permissions:
   contents: write
 
+concurrency:
+  group: sync-live-horoshop
+  cancel-in-progress: true
+
 jobs:
   sync-live-horoshop:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -26,18 +34,36 @@ jobs:
 
       - run: pip install requests
 
-      - name: Parse Horoshop XML
-        run: python tools-store-feed/parse_horoshop_live.py
-
-      - name: Commit changed live feed
+      - name: Keep live Horoshop feed fresh every 5 minutes
         shell: bash
         run: |
-          git add tools-store-feed/horoshop-live.csv tools-store-feed/horoshop-live-diagnostic.txt
-          if git diff --cached --quiet; then
-            echo "No changes."
-            exit 0
-          fi
+          set -euo pipefail
+
           git config user.name "tools-store-feed-bot"
           git config user.email "actions@users.noreply.github.com"
-          git commit -m "Sync live Horoshop XML feed"
-          git push
+
+          for i in $(seq 1 35); do
+            echo "Sync #$i"
+
+            git pull --rebase origin main || true
+
+            python tools-store-feed/parse_horoshop_live.py
+
+            TZ=Europe/Kyiv date "+%d.%m.%Y %H:%M:%S" > tools-store-feed/last-live-sync.txt
+
+            git add \
+              tools-store-feed/horoshop-live.csv \
+              tools-store-feed/horoshop-live-diagnostic.txt \
+              tools-store-feed/last-live-sync.txt
+
+            if ! git diff --cached --quiet; then
+              git commit -m "Sync live Horoshop XML feed"
+              git push
+            else
+              echo "No changes."
+            fi
+
+            if [ "$i" -lt 35 ]; then
+              sleep 300
+            fi
+          done
