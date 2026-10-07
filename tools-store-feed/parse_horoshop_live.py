@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import csv, io, os, re, sys, requests
+import csv, os, re, requests
 import xml.etree.ElementTree as ET
 from collections import Counter
 
@@ -39,49 +39,31 @@ def first_text(elem, names):
                 return txt
     return ""
 
-def find_article(elem):
-    # common tags
-    v=first_text(elem, ["vendorCode","article","sku","code","articul","article_for_display"])
-    if v:
-        return v
-    # params named article/sku
-    for ch in elem.iter():
-        if local(ch.tag).lower()=="param":
-            name=norm(ch.attrib.get("name","")).lower()
-            if any(k in name for k in ["артикул","article","sku","код товар"]):
-                txt=norm(ch.text)
-                if txt:
-                    return txt
-    # attribute fallback
-    for k in ["article","sku","code","id"]:
-        if norm(elem.attrib.get(k,"")):
-            return norm(elem.attrib[k])
-    return ""
+def find_vendor_code(elem):
+    return first_text(elem, ["vendorCode","article","sku","code","articul","article_for_display"])
 
 def find_name(elem):
     return first_text(elem, ["name","title","model"])
 
+def find_brand(elem):
+    return first_text(elem, ["vendor","brand","manufacturer"])
+
 def find_status(elem):
-    # attributes first
     for k in ["available","availability","presence","in_stock","stock"]:
         if k in elem.attrib:
             s=status_from_value(elem.attrib.get(k))
             if s:
                 return s
-    # tags
     for nm in ["presence","availability","available","status","in_stock","stock_status"]:
         v=first_text(elem,[nm])
         s=status_from_value(v)
         if s:
             return s
-    # quantity tags
     for nm in ["quantity","stock_quantity","qty","stock","amount","count"]:
         v=first_text(elem,[nm])
         s=status_from_value(v)
         if s:
             return s
-    # Horoshop YML: unavailable offers may omit the available attribute entirely.
-    # For a repeating <offer>, absence of an availability marker therefore means unavailable.
     if local(elem.tag).lower() == "offer":
         return "Немає в наявності"
     return ""
@@ -90,42 +72,55 @@ os.makedirs(os.path.dirname(OUT), exist_ok=True)
 r=requests.get(URL, timeout=180)
 r.raise_for_status()
 data=r.content
-open("/tmp/horoshop.xml","wb").write(data)
 
 root=ET.fromstring(data)
 counts=Counter(local(e.tag) for e in root.iter())
 
 candidates=[]
 for e in root.iter():
-    lt=local(e.tag).lower()
-    if lt in {"offer","product","item","good"}:
+    if local(e.tag).lower() == "offer":
         candidates.append(e)
 
 rows=[]
-missing_article=0
+missing_vendor=0
 missing_status=0
+missing_offer_id=0
+
 for e in candidates:
-    article=find_article(e)
+    vendor_code=find_vendor_code(e)
     name=find_name(e)
+    brand=find_brand(e)
     status=find_status(e)
-    if not article:
-        missing_article += 1
+    offer_id=norm(e.attrib.get("id",""))
+
+    if not vendor_code:
+        missing_vendor += 1
         continue
     if not status:
         missing_status += 1
         continue
-    rows.append((article,status,name))
+    if not offer_id:
+        missing_offer_id += 1
 
-# dedupe by article, last occurrence wins
+    rows.append((vendor_code,status,name,offer_id,brand))
+
+# dedupe by vendor code, last occurrence wins
 d={}
-for a,s,n in rows:
-    d[a]=(s,n)
-rows=[(a,v[0],v[1]) for a,v in d.items()]
+for vendor_code,status,name,offer_id,brand in rows:
+    d[vendor_code]=(status,name,offer_id,brand)
+
+rows=[(a,v[0],v[1],v[2],v[3]) for a,v in d.items()]
 rows.sort(key=lambda x:x[0])
 
 with open(OUT,"w",encoding="utf-8-sig",newline="") as f:
     w=csv.writer(f)
-    w.writerow(["Артикул","Наявність","Назва"])
+    w.writerow([
+        "Артикул",
+        "Наявність",
+        "Назва",
+        "offer_id",
+        "Бренд"
+    ])
     w.writerows(rows)
 
 with open(DIAG,"w",encoding="utf-8") as f:
@@ -134,8 +129,9 @@ with open(DIAG,"w",encoding="utf-8") as f:
     f.write(f"Root: {local(root.tag)}\n")
     f.write(f"Candidates: {len(candidates)}\n")
     f.write(f"Rows written: {len(rows)}\n")
-    f.write(f"Missing article: {missing_article}\n")
+    f.write(f"Missing vendor code: {missing_vendor}\n")
     f.write(f"Missing status: {missing_status}\n")
+    f.write(f"Missing offer id: {missing_offer_id}\n")
     f.write("Top tags:\n")
     for tag,c in counts.most_common(40):
         f.write(f"{tag}: {c}\n")
