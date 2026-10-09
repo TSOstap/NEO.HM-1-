@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 40850779
+Bytes: 40850868
 Root: yml_catalog
 Candidates: 5169
 Rows written: 5169
@@ -17,7 +17,7 @@ vendorCode: 5169
 vendor: 5169
 name: 5169
 description: 5169
-oldprice: 4691
+oldprice: 4694
 param: 3301
 category: 380
 yml_catalog: 1
