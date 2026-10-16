@@ -1,23 +1,23 @@
 HTTP: 200
-Bytes: 40833393
+Bytes: 40769124
 Root: yml_catalog
-Candidates: 5165
-Rows written: 5165
+Candidates: 5157
+Rows written: 5157
 Missing vendor code: 0
 Missing status: 0
 Missing offer id: 0
 Top tags:
-picture: 32441
-offer: 5165
-url: 5165
-price: 5165
-currencyId: 5165
-categoryId: 5165
-vendorCode: 5165
-vendor: 5165
-name: 5165
-description: 5165
-oldprice: 4706
+picture: 32404
+offer: 5157
+url: 5157
+price: 5157
+currencyId: 5157
+categoryId: 5157
+vendorCode: 5157
+vendor: 5157
+name: 5157
+description: 5157
+oldprice: 4699
 param: 3302
 category: 380
 yml_catalog: 1
