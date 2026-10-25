@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 40777306
+Bytes: 40777639
 Root: yml_catalog
 Candidates: 5157
 Rows written: 5157
@@ -7,7 +7,7 @@ Missing vendor code: 0
 Missing status: 0
 Missing offer id: 0
 Top tags:
-picture: 32404
+picture: 32407
 offer: 5157
 url: 5157
 price: 5157
