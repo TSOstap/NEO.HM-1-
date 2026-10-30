@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 42474937
+Bytes: 42474933
 Root: yml_catalog
 Candidates: 5232
 Rows written: 5232
