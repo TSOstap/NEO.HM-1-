@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 43671440
+Bytes: 43671562
 Root: yml_catalog
 Candidates: 5326
 Rows written: 5325
@@ -19,7 +19,7 @@ name: 5326
 description: 5326
 oldprice: 4779
 param: 3448
-category: 381
+category: 383
 yml_catalog: 1
 shop: 1
 currencies: 1
