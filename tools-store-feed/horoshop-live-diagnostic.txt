@@ -1,8 +1,8 @@
 HTTP: 200
-Bytes: 43631392
+Bytes: 43671440
 Root: yml_catalog
 Candidates: 5326
-Rows written: 5324
+Rows written: 5325
 Missing vendor code: 0
 Missing status: 0
 Missing offer id: 0
@@ -18,7 +18,7 @@ vendor: 5326
 name: 5326
 description: 5326
 oldprice: 4779
-param: 3408
+param: 3448
 category: 381
 yml_catalog: 1
 shop: 1
