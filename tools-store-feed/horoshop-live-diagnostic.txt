@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 44855009
+Bytes: 44859124
 Root: yml_catalog
 Candidates: 5421
 Rows written: 5421
@@ -7,7 +7,7 @@ Missing vendor code: 0
 Missing status: 0
 Missing offer id: 0
 Top tags:
-picture: 33604
+picture: 33605
 offer: 5421
 url: 5421
 price: 5421
@@ -17,8 +17,8 @@ vendorCode: 5421
 vendor: 5421
 name: 5421
 description: 5421
-oldprice: 4818
-param: 3481
+oldprice: 4829
+param: 3483
 category: 383
 yml_catalog: 1
 shop: 1
