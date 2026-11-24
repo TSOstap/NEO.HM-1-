@@ -1,23 +1,23 @@
 HTTP: 200
-Bytes: 44888905
+Bytes: 46140301
 Root: yml_catalog
-Candidates: 5421
-Rows written: 5421
+Candidates: 5521
+Rows written: 5521
 Missing vendor code: 0
 Missing status: 0
 Missing offer id: 0
 Top tags:
-picture: 33605
-offer: 5421
-url: 5421
-price: 5421
-currencyId: 5421
-categoryId: 5421
-vendorCode: 5421
-vendor: 5421
-name: 5421
-description: 5421
-oldprice: 4829
+picture: 34185
+offer: 5521
+url: 5521
+price: 5521
+currencyId: 5521
+categoryId: 5521
+vendorCode: 5521
+vendor: 5521
+name: 5521
+description: 5521
+oldprice: 4929
 param: 3518
 category: 383
 yml_catalog: 1
