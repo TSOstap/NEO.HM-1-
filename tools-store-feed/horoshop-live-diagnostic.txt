@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 46147610
+Bytes: 46150426
 Root: yml_catalog
 Candidates: 5521
 Rows written: 5521
@@ -17,8 +17,8 @@ vendorCode: 5521
 vendor: 5521
 name: 5521
 description: 5521
-oldprice: 4932
-param: 3523
+oldprice: 4933
+param: 3529
 category: 383
 yml_catalog: 1
 shop: 1
