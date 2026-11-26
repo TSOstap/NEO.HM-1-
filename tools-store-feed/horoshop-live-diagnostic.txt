@@ -1,5 +1,5 @@
 HTTP: 200
-Bytes: 46150426
+Bytes: 46199845
 Root: yml_catalog
 Candidates: 5521
 Rows written: 5521
@@ -17,8 +17,8 @@ vendorCode: 5521
 vendor: 5521
 name: 5521
 description: 5521
-oldprice: 4933
-param: 3529
+oldprice: 4973
+param: 3584
 category: 383
 yml_catalog: 1
 shop: 1
@@ -31,7 +31,7 @@ First candidate preview:
 <offer id="512" group_id="30792" available="true">
     <url>https://tools-store.com.ua/einhell-tc-sm-2131-1-dual/</url>
     <oldprice>10950</oldprice>
-    <price>8760</price>
+    <price>8497</price>
     <currencyId>UAH</currencyId>
     <categoryId>1494</categoryId>
     <picture>https://tools-store.com.ua/content/images/13/34705319293712_+9699129331.jpeg</picture>
